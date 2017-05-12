@@ -1,1 +1,1 @@
-from .provdoc import ProvDoc
+from provdoc import *
