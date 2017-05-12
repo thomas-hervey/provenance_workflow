@@ -23,7 +23,7 @@ d1.wasAssociatedWith(tweet_posting, twitter_user)
 d1.wasAttributedTo(tweet, twitter_user)
 
 # load test data
-local_test_data = 'test_data.json'
+local_test_data = '~/Projects/thesis/LOCATION_PROJECT/test/test_data.json'
 with open(local_test_data) as test_data_file:
     test_data = json.load(test_data_file)
     pprint(test_data)

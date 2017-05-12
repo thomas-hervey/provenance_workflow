@@ -7,11 +7,13 @@ class ProvDoc(object):
     
     name = ''
     query = ''
+    namespaces = {}
     
     def __init__(self, name, query, ns):
         self.serialization = None
         self.name = name
         self.query = query
+        self.namespaces = ns
         self.provDocs = ProvDocument(namespaces=ns)
 
     """setup"""
