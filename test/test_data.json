@@ -1,0 +1,28 @@
+{
+  "1": {
+    "user" : {
+      "name" : "Thomas",
+      "home_location" : "Baltimore"
+    },
+    "created_at" : "12:00:00",
+    "content" : {
+      "text" : "I love my city",
+      "hashtags" : "",
+      "location" : "lat/lon",
+      "tagged_location" : "Baltimore"
+    }
+  },
+   "2": {
+    "user" : {
+      "name" : "Madison",
+      "home_location" : "Richmond"
+    },
+    "created_at" : "11:00:00",
+    "content" : {
+      "text" : "I love my city",
+      "hashtags" : "b4lt1m0re",
+      "location" : "",
+      "tagged_location" : "Charlottesville"
+    }
+  }
+}
