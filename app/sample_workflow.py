@@ -1,6 +1,8 @@
+import json
+from pprint import pprint
+
 from provdoc import *
-import rdflib
-from utils import Reader
+from utils import Reader, test_data
 
 namespaces = {
    'local': 'http://localhost/#',
@@ -34,11 +36,16 @@ print serialization
 print sample_twitter_document.get_prov()
 
 
-reader = Reader()
+# grab sample data
+data = test_data
+pprint(data)
 
-local_test_data = 'test_data.json'
-with open(local_test_data) as test_data_file:
-    reader.load_data(test_data_file)
-    reader.print_data()
+
+
+# reader = Reader()
+# local_test_data = 'test_data.json'
+# with open(local_test_data) as test_data_file:
+#     reader.load_data(test_data_file)
+#     reader.print_data()
 
 
