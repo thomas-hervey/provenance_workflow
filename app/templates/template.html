@@ -28,6 +28,7 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
+              <li><a href="{{ url_for('users.about') }}">About</a></li>
             {% if not session.logged_in %}
               <li><a href="{{ url_for('users.register') }}">Signup</a></li>
             {% else %}
@@ -36,7 +37,7 @@
           </ul>
           {% if session.logged_in %}
           <ul class="nav navbar-nav navbar-right">
-            <li><a>Welcome, {% if username %}{{username}}{% endif %}{% else %}current user.</a></li>
+            <li><a>Welcome, {% if username %}{{username}}{% endif %}</a></li>
           </ul>
           {% endif %}
         </div><!--/.nav-collapse -->
@@ -52,13 +53,14 @@
           <div class="error"><strong>Error:</strong> {{ error }}</div>
         {% endif %}
 
+        <!-- main content block -->
         {% block content %}
         {% endblock %}
 
       </div>
       <div class="footer">
         <hr>
-        <p>&copy; <a href="http://www.realpython.com">Real Python</a></p>
+        <p><a href="http://www.spatial.ucsb.edu">Thomas Hervey</a></p>
       </div>
     </div><!-- /.container -->
     <!-- scripts -->

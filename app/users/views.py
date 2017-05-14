@@ -97,3 +97,8 @@ def register():
             return render_template('register.html', form=form, error=error)
     if request.method == 'GET':
         return render_template('register.html', form=form)
+
+
+@users_blueprint.route('/about/')
+def about():
+    return render_template('about.html')
