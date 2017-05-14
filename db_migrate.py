@@ -45,7 +45,7 @@ with sqlite3.connect(DATABASE_PATH) as connection:
     db.create_all()
 
     # retrieve data from old_users table
-    c.execute("""SELECT name, email, password
+    c.execute("""SELECT username, email, password
                  FROM old_users
                  ORDER BY id ASC""")
 
@@ -54,7 +54,7 @@ with sqlite3.connect(DATABASE_PATH) as connection:
             'user') for row in c.fetchall()]
 
     # insert data to users table
-    c.executemany("""INSERT INTO users (name, email, password,
+    c.executemany("""INSERT INTO users (username, email, password,
                     role) VALUES (?, ?, ?, ?)""", data)
 
     # delete old_users table

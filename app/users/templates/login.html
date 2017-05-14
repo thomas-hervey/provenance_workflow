@@ -10,10 +10,10 @@
       {{ form.csrf_token }}
       <div class="lead">Please sign in to access your social network data request list</div>
         <p>
-        {{ form.name(placeholder="name") }}
+        {{ form.username(placeholder="username") }}
         <span class="error">
-          {% if form.name.errors %}
-            {% for error in form.name.errors %}
+          {% if form.username.errors %}
+            {% for error in form.username.errors %}
               {{ error }}
             {% endfor %}
           {% endif %}

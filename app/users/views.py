@@ -36,7 +36,7 @@ def logout():
     session.pop('logged_in', None)
     session.pop('user_id', None)
     session.pop('role', None)
-    session.pop('name', None)
+    session.pop('username', None)
     flash('You are logged out.')
     return redirect(url_for('users.login'))
 
@@ -47,7 +47,7 @@ def login():
     form = LoginForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
-            user = User.query.filter_by(name=request.form['name']).first()
+            user = User.query.filter_by(username=request.form['username']).first()
             if user is None:
                 error = 'Invalid username or password.'
                 return render_template(
@@ -61,7 +61,7 @@ def login():
                 session['logged_in'] = True
                 session['user_id'] = user.id
                 session['role'] = user.role
-                session['name'] = user.name
+                session['username'] = user.username
                 flash('Welcome!')
                 return redirect(url_for('tasks.tasks'))
         else:
@@ -81,7 +81,7 @@ def register():
     if request.method == 'POST':
         if form.validate_on_submit():
             new_user = User(
-                form.name.data,
+                form.username.data,
                 form.email.data,
                 bcrypt.generate_password_hash(form.password.data)
             )
