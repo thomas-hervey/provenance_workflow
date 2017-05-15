@@ -32,12 +32,13 @@
             {% if not session.logged_in %}
               <li><a href="{{ url_for('users.register') }}">Signup</a></li>
             {% else %}
+                <li><a href="/">Tasks</a></li>
               <li><a href="{{ url_for('users.logout') }}">Signout</a></li>
             {% endif %}
           </ul>
           {% if session.logged_in %}
           <ul class="nav navbar-nav navbar-right">
-            <li><a>Welcome, {% if username %}{{username}}{% endif %}</a></li>
+            <li><a>Welcome{% if username %}, {{ username }}{% endif %}</a></li>
           </ul>
           {% endif %}
         </div><!--/.nav-collapse -->
@@ -60,7 +61,7 @@
       </div>
       <div class="footer">
         <hr>
-        <p><a href="http://www.spatial.ucsb.edu">Thomas Hervey</a></p>
+        <p><a href="http://www.spatial.ucsb.edu">- Thomas Hervey</a></p>
       </div>
     </div><!-- /.container -->
     <!-- scripts -->
