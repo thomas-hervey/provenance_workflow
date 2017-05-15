@@ -1,0 +1,21 @@
+{
+  "name": "location_project",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Thomas Hervey <thomasahervey@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/tomtom92/LOCATION_PROJECT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "v4.0.0-alpha.6",
+    "jquery": "^3.2.1"
+  }
+}
