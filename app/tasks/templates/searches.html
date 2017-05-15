@@ -1,0 +1,36 @@
+<!-- /project/tasks/templates/tasks.html -->
+
+
+{% extends "template.html" %}
+
+{% block content %}
+    <div class="add-search">
+      <div class="lead">Add a new search:</div>
+      <form action="{{ url_for('tasks.new_search') }}" method="post">
+        {{ form.csrf_token }}
+        <p>
+        {{ form.name(placeholder="name") }}
+        <span class="error">
+          {% if form.name.errors %}
+            {% for error in form.name.errors %}
+              {{ error }}
+            {% endfor %}
+          {% endif %}
+        </span>
+        </p>
+        <p>
+        {{ form.source(placeholder="source") }}
+        <span class="error">
+          {% if form.source.errors %}
+            {% for error in form.source.errors %}
+              {{ error }}
+            {% endfor %}
+          {% endif %}
+        </span>
+        </p>
+        <br>
+        <p><button class="btn btn-sm btn-success" type="submit">Submit</button></p>
+      </form>
+    </div>
+
+{% endblock %}

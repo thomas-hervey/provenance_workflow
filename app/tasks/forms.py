@@ -2,14 +2,13 @@
 
 
 from flask_wtf import Form
-from wtforms import TextField, DateField, IntegerField, \
-    SelectField
+from wtforms import StringField, DateField, IntegerField, SelectField
 from wtforms.validators import DataRequired
 
 
 class AddTaskForm(Form):
     task_id = IntegerField()
-    name = TextField('Task Name', validators=[DataRequired()])
+    name = StringField('Task Name', validators=[DataRequired()])
     due_date = DateField(
         'Date Due (mm/dd/yyyy)',
         validators=[DataRequired()], format='%m/%d/%Y'
@@ -23,3 +22,16 @@ class AddTaskForm(Form):
         ]
     )
     status = IntegerField('Status')
+
+
+class AddSearchForm(Form):
+    search_id = IntegerField()
+    name = StringField('Search Name', validators=[DataRequired()])
+    source = SelectField(
+        'Source',
+        validators=[DataRequired()],
+        choices=[
+            ('Twitter', 'Twitter'), ('Facebook', 'Facebook'), ('FourSquare', 'Foursquare'),
+            ('Google +', 'Google +'), ('Instagram', 'Instagram'), ('Yelp', 'Yelp')
+        ]
+    )

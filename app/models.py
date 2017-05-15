@@ -27,7 +27,24 @@ class Task(db.Model):
         self.user_id = user_id
 
     def __repr__(self):
-        return '<name %r>' % (self.name)
+        return '<name %r>' % self.name
+
+
+class Search(db.Model):
+    
+    __tablename__ = 'searches'
+
+    search_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    source = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    
+    def __init__(self, name=None, source=None):
+        self.name = name
+        self.source = source
+    
+    def __repr__(self):
+        return '<name %r>' % self.name
 
 
 class User(db.Model):

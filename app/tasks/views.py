@@ -2,10 +2,10 @@
 
 from flask import flash, redirect, render_template, request, \
     session, url_for, Blueprint
-from forms import AddTaskForm
+from forms import AddTaskForm, AddSearchForm
 from ..app import db
 from app.views import login_required
-from app.models import Task
+from app.models import Task, Search
 
 
 ################
@@ -49,7 +49,7 @@ def new_task():
     form = AddTaskForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
-            new_task = Task(
+            task = Task(
                 form.name.data,
                 form.due_date.data,
                 form.priority.data,
@@ -57,7 +57,7 @@ def new_task():
                 '1',
                 session['user_id']
             )
-            db.session.add(new_task)
+            db.session.add(task)
             db.session.commit()
             flash('New entry was successfully posted. Thanks.')
             return redirect(url_for('tasks.tasks'))
@@ -95,3 +95,26 @@ def delete_entry(task_id):
     else:
         flash('You can only delete tasks that belong to you.')
         return redirect(url_for('tasks.tasks'))
+
+
+@tasks_blueprint.route('/search/', methods=['GET', 'POST'])
+@login_required
+def new_search():
+    error = None
+    form = AddSearchForm(request.form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            search = Search(
+                form.source.name,
+                form.source.data
+            )
+            db.session.add(search)
+            db.session.commit()
+            flash('New entry was successfully posted. Thanks.')
+            return redirect(url_for('tasks.tasks'))
+        else:
+            return render_template('tasks.html', form=form, error=error)
+    return render_template(
+            'searches.html',
+            form=AddSearchForm(request.form)
+    )
