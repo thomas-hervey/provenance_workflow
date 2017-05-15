@@ -112,7 +112,6 @@ wcwidth==0.1.7
 Werkzeug==0.12.1
 widgetsnbextension==2.0.0
 WTForms==2.0.2
-
 Flask-Bcrypt==0.6.0
 MarkupSafe==0.23
 py-bcrypt==0.4
