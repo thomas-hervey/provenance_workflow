@@ -67,9 +67,9 @@
             <td>{{ o.due_date }}</td>
             <td>{{ o.posted_date }}</td>
             <td>{{ o.priority }}</td>
-            <td>{{ o.poster.name }}</td>
+            <td>{{ o.poster.username }}</td>
             <td>
-              {% if o.poster.name == session.name or session.role == "admin" %}
+              {% if o.poster.username == session.username or session.role == "admin" %}
                 <a href="{{ url_for('tasks.delete_entry', task_id = o.task_id) }}">Delete</a>  -
                 <a href="{{ url_for('tasks.complete', task_id = o.task_id) }}">Mark as Complete</a>
               {% else %}
@@ -104,9 +104,9 @@
             <td>{{ c.due_date }}</td>
             <td>{{ c.posted_date }}</td>
             <td>{{ c.priority }}</td>
-            <td>{{ c.poster.name }}</td>
+            <td>{{ c.poster.username }}</td>
             <td>
-              {% if c.poster.name == session.name or session.role == "admin" %}
+              {% if c.poster.username == session.username or session.role == "admin" %}
                <a href="{{ url_for('tasks.delete_entry', task_id = c.task_id) }}">Delete</a>
               {% else %}
                 <span>N/A</span>

@@ -2,6 +2,7 @@
 
 from flask import flash, redirect, render_template, request, \
     session, url_for, Blueprint
+import datetime
 from forms import AddTaskForm, AddSearchForm
 from ..app import db
 from app.views import login_required
@@ -44,7 +45,6 @@ def tasks():
 @tasks_blueprint.route('/add/', methods=['GET', 'POST'])
 @login_required
 def new_task():
-    import datetime
     error = None
     form = AddTaskForm(request.form)
     if request.method == 'POST':
@@ -97,7 +97,20 @@ def delete_entry(task_id):
         return redirect(url_for('tasks.tasks'))
 
 
-@tasks_blueprint.route('/search/', methods=['GET', 'POST'])
+@tasks_blueprint.route('/searches/')
+@login_required
+def searches():
+    completed_searches = db.session.query(Search).order_by(Search.posted_date.asc())
+    
+    return render_template(
+        'searches.html',
+        form=AddSearchForm(request.form),
+        completed_searches=completed_searches,
+        username=session['name']
+    )
+
+
+@tasks_blueprint.route('/add_search/', methods=['GET', 'POST'])
 @login_required
 def new_search():
     error = None
@@ -106,15 +119,29 @@ def new_search():
         if form.validate_on_submit():
             search = Search(
                 form.source.name,
-                form.source.data
+                form.source.data,
+                datetime.datetime.utcnow(),
+                session['user_id']
             )
             db.session.add(search)
             db.session.commit()
-            flash('New entry was successfully posted. Thanks.')
-            return redirect(url_for('tasks.tasks'))
+            flash('New search was successfully created.')
+            return redirect(url_for('tasks.searches'))
         else:
-            return render_template('tasks.html', form=form, error=error)
-    return render_template(
-            'searches.html',
-            form=AddSearchForm(request.form)
-    )
+            return render_template('searches.html', form=form, error=error)
+
+
+# Delete Tasks:
+@tasks_blueprint.route('/delete_search/<int:search_id>/',)
+@login_required
+def delete_search(search_id):
+    new_id = search_id
+    search = db.session.query(Search).filter_by(search_id=new_id)
+    if session['user_id'] == search.first().user_id or session['role'] == "admin":
+        search.delete()
+        db.session.commit()
+        flash('The search was deleted. Why not add a new one?')
+        return redirect(url_for('tasks.searches'))
+    else:
+        flash('You can only delete searches that belong to you.')
+        return redirect(url_for('tasks.searches'))
