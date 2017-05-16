@@ -6,64 +6,68 @@
 {% block content %}
 
     <div class="add-search">
-      <div class="lead">Add a new search:</div>
-      <form action="{{ url_for('tasks.new_search') }}" method="post">
-        {{ form.csrf_token }}
-        <p>
-        {{ form.name(placeholder="name") }}
-        <span class="error">
+        <div class="lead">Add a new search:</div>
+        <form action="{{ url_for('tasks.new_search') }}" method="post">
+            {{ form.csrf_token }}
+            <p>
+                {{ form.name(placeholder="name") }}
+                <span class="error">
           {% if form.name.errors %}
-            {% for error in form.name.errors %}
-              {{ error }}
-            {% endfor %}
+              {% for error in form.name.errors %}
+                  {{ error }}
+              {% endfor %}
           {% endif %}
         </span>
-        </p>
-        <p>
-        {{ form.source(placeholder="source") }}
-        <span class="error">
+            </p>
+            <p>
+                {{ form.source(placeholder="source") }}
+                <span class="error">
           {% if form.source.errors %}
-            {% for error in form.source.errors %}
-              {{ error }}
-            {% endfor %}
+              {% for error in form.source.errors %}
+                  {{ error }}
+              {% endfor %}
           {% endif %}
         </span>
-        </p>
-        <br>
-        <p><button class="btn btn-sm btn-success" type="submit">Submit</button></p>
-      </form>
+            </p>
+            <br>
+            <p>
+                <button class="btn btn-sm btn-success" type="submit">Submit</button>
+            </p>
+        </form>
     </div>
     <div class="entries">
-      <br>
-      <br>
-      <div class="lead">Completed searches</div>
-      <br>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-              <th>Name</th>
-              <th>Source</th>
-              <th>Posted By</th>
-              <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-        {% for s in completed_searches %}
-          <tr>
-            <td>{{ s.name }}</td>
-            <td>{{ s.source }}</td>
-            <td>{{ s.poster.username }}</td>
-            <td>
-              {% if s.poster.username == session.username or session.role == "admin" %}
-                <a href="{{ url_for('tasks.delete_search', search_id = s.search_id) }}">Delete</a>
-              {% else %}
-                <span>N/A</span>
-              {% endif %}
-            </td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
+        <br>
+        <br>
+        <div class="lead">Completed searches</div>
+        <br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Source</th>
+                <th>Posted By</th>
+                <th>Posted Date</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for s in completed_searches %}
+                <tr>
+                    <td>{{ s.name }}</td>
+                    <td>{{ s.source }}</td>
+                    <td>{{ s.poster.username }}</td>
+                    <td>{{ s.posted_date }}</td>
+                    <td>
+                        {% if s.poster.username == session.username or session.role == "admin" %}
+                            <a href="{{ url_for('tasks.delete_search', search_id = s.search_id) }}">Delete</a>
+                        {% else %}
+                            <span>N/A</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 
 {% endblock %}

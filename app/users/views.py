@@ -13,16 +13,15 @@ from ..app import db, bcrypt
 from app.views import login_required
 from app.models import User
 
-
 ################
 #### config ####
 ################
 
 users_blueprint = Blueprint(
-    'users', __name__,
-    url_prefix='/users',
-    template_folder='templates',
-    static_folder='static'
+        'users', __name__,
+        url_prefix='/users',
+        template_folder='templates',
+        static_folder='static'
 )
 
 
@@ -32,7 +31,7 @@ users_blueprint = Blueprint(
 
 @users_blueprint.route('/logout/')
 @login_required
-def logout():
+def logout( ):
     session.pop('logged_in', None)
     session.pop('user_id', None)
     session.pop('role', None)
@@ -42,7 +41,7 @@ def logout():
 
 
 @users_blueprint.route('/', methods=['GET', 'POST'])
-def login():
+def login( ):
     error = None
     form = LoginForm(request.form)
     if request.method == 'POST':
@@ -51,12 +50,12 @@ def login():
             if user is None:
                 error = 'Invalid username or password.'
                 return render_template(
-                    "login.html",
-                    form=form,
-                    error=error
+                        "login.html",
+                        form=form,
+                        error=error
                 )
             elif bcrypt.check_password_hash(
-                user.password, request.form['password']
+                    user.password, request.form['password']
             ):
                 session['logged_in'] = True
                 session['user_id'] = user.id
@@ -66,24 +65,24 @@ def login():
                 return redirect(url_for('tasks.tasks'))
         else:
             return render_template(
-                "login.html",
-                form=form,
-                error=error
+                    "login.html",
+                    form=form,
+                    error=error
             )
     if request.method == 'GET':
         return render_template('login.html', form=form)
 
 
 @users_blueprint.route('/register/', methods=['GET', 'POST'])
-def register():
+def register( ):
     error = None
     form = RegisterForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
             new_user = User(
-                form.username.data,
-                form.email.data,
-                bcrypt.generate_password_hash(form.password.data)
+                    form.username.data,
+                    form.email.data,
+                    bcrypt.generate_password_hash(form.password.data)
             )
             try:
                 db.session.add(new_user)
@@ -100,5 +99,5 @@ def register():
 
 
 @users_blueprint.route('/about/')
-def about():
+def about( ):
     return render_template('about.html')

@@ -9,7 +9,7 @@ string_types = (str, unicode) if str is bytes else (str, bytes)
 iteritems = lambda mapping: getattr(mapping, 'iteritems', mapping.items)()
 
 
-def objwalk(obj, path=(), memo=None):
+def objwalk( obj, path=(), memo=None ):
     if memo is None:
         memo = set()
     iterator = None
