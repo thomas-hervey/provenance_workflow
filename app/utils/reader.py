@@ -1,20 +1,27 @@
 import json
+import os
 from pprint import pprint
-from search import objwalk
-
 
 class Reader(object):
-    raw_data = {}
+    json_data = {}
     
     def __init__( self, test_param=None ):
         self.test_param = test_param
     
-    def load_data( self, data_source ):
-        self.raw_data = json.load(data_source)
+    def load_data_from_file(self, relative_filepath):
+        current_directory = os.path.dirname(__file__)
+        filename = os.path.join(current_directory, relative_filepath)
+        with open(filename) as source_file:
+            self._to_json(source_file)
+    
+    def load_json_data(self, source_data):
+        self.json_data = source_data
+    
+    def _to_json( self, source_file ):
+        self.json_data = json.load(source_file)
+    
+    def get_data(self):
+        return self.json_data
     
     def print_data( self ):
-        pprint(self.raw_data)
-    
-    def find_item( self, item ):
-        for path, value in objwalk(self.raw_data):
-            print path, value
+        pprint(self.json_data)
