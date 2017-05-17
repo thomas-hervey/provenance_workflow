@@ -45,7 +45,7 @@ with sqlite3.connect(DATABASE_PATH) as connection:
     db.create_all()
 
     # retrieve data from old_users table
-    c.execute("""SELECT name, email, password
+    c.execute("""SELECT username, email, password
                  FROM old_users
                  ORDER BY id ASC""")
 

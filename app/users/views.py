@@ -9,20 +9,19 @@ from flask import flash, redirect, render_template, request, \
     session, url_for, Blueprint
 from sqlalchemy.exc import IntegrityError
 from forms import RegisterForm, LoginForm
-from ..app import db, bcrypt
+from app import db, bcrypt
 from app.views import login_required
 from app.models import User
-
 
 ################
 #### config ####
 ################
 
 users_blueprint = Blueprint(
-    'users', __name__,
-    url_prefix='/users',
-    template_folder='templates',
-    static_folder='static'
+        'users', __name__,
+        url_prefix='/users',
+        template_folder='templates',
+        static_folder='static'
 )
 
 
@@ -32,58 +31,58 @@ users_blueprint = Blueprint(
 
 @users_blueprint.route('/logout/')
 @login_required
-def logout():
+def logout( ):
     session.pop('logged_in', None)
     session.pop('user_id', None)
     session.pop('role', None)
-    session.pop('name', None)
+    session.pop('username', None)
     flash('You are logged out.')
     return redirect(url_for('users.login'))
 
 
 @users_blueprint.route('/', methods=['GET', 'POST'])
-def login():
+def login( ):
     error = None
     form = LoginForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
-            user = User.query.filter_by(name=request.form['name']).first()
+            user = User.query.filter_by(username=request.form['username']).first()
             if user is None:
                 error = 'Invalid username or password.'
                 return render_template(
-                    "login.html",
-                    form=form,
-                    error=error
+                        "login.html",
+                        form=form,
+                        error=error
                 )
             elif bcrypt.check_password_hash(
-                user.password, request.form['password']
+                    user.password, request.form['password']
             ):
                 session['logged_in'] = True
                 session['user_id'] = user.id
                 session['role'] = user.role
-                session['name'] = user.name
+                session['username'] = user.username
                 flash('Welcome!')
                 return redirect(url_for('tasks.tasks'))
         else:
             return render_template(
-                "login.html",
-                form=form,
-                error=error
+                    "login.html",
+                    form=form,
+                    error=error
             )
     if request.method == 'GET':
         return render_template('login.html', form=form)
 
 
 @users_blueprint.route('/register/', methods=['GET', 'POST'])
-def register():
+def register( ):
     error = None
     form = RegisterForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
             new_user = User(
-                form.name.data,
-                form.email.data,
-                bcrypt.generate_password_hash(form.password.data)
+                    form.username.data,
+                    form.email.data,
+                    bcrypt.generate_password_hash(form.password.data)
             )
             try:
                 db.session.add(new_user)
@@ -100,5 +99,5 @@ def register():
 
 
 @users_blueprint.route('/about/')
-def about():
+def about( ):
     return render_template('about.html')

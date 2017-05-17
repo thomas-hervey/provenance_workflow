@@ -2,21 +2,21 @@
 
 from flask import flash, redirect, render_template, request, \
     session, url_for, Blueprint
-from forms import AddTaskForm
+import datetime
+from forms import AddTaskForm, AddSearchForm
 from ..app import db
 from app.views import login_required
-from app.models import Task
-
+from app.models import Task, Search
 
 ################
 #### config ####
 ################
 
 tasks_blueprint = Blueprint(
-    'tasks', __name__,
-    url_prefix='/tasks',
-    template_folder='templates',
-    static_folder='static'
+        'tasks', __name__,
+        url_prefix='/tasks',
+        template_folder='templates',
+        static_folder='static'
 )
 
 
@@ -26,38 +26,37 @@ tasks_blueprint = Blueprint(
 
 @tasks_blueprint.route('/tasks/')
 @login_required
-def tasks():
+def tasks( ):
     open_tasks = db.session.query(Task) \
         .filter_by(status='1').order_by(Task.due_date.asc())
     closed_tasks = db.session.query(Task) \
         .filter_by(status='0').order_by(Task.due_date.asc())
     return render_template(
-        'tasks.html',
-        form=AddTaskForm(request.form),
-        open_tasks=open_tasks,
-        closed_tasks=closed_tasks,
-        username=session['name']
+            'tasks.html',
+            form=AddTaskForm(request.form),
+            open_tasks=open_tasks,
+            closed_tasks=closed_tasks,
+            username=session['name']
     )
 
 
 # Add new tasks:
 @tasks_blueprint.route('/add/', methods=['GET', 'POST'])
 @login_required
-def new_task():
-    import datetime
+def new_task( ):
     error = None
     form = AddTaskForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
-            new_task = Task(
-                form.name.data,
-                form.due_date.data,
-                form.priority.data,
-                datetime.datetime.utcnow(),
-                '1',
-                session['user_id']
+            task = Task(
+                    form.name.data,
+                    form.due_date.data,
+                    form.priority.data,
+                    datetime.datetime.utcnow(),
+                    '1',
+                    session['user_id']
             )
-            db.session.add(new_task)
+            db.session.add(task)
             db.session.commit()
             flash('New entry was successfully posted. Thanks.')
             return redirect(url_for('tasks.tasks'))
@@ -66,9 +65,9 @@ def new_task():
 
 
 # Mark tasks as complete:
-@tasks_blueprint.route('/complete/<int:task_id>/',)
+@tasks_blueprint.route('/complete/<int:task_id>/', )
 @login_required
-def complete(task_id):
+def complete( task_id ):
     new_id = task_id
     task = db.session.query(Task).filter_by(task_id=new_id)
     if session['user_id'] == task.first().user_id or session['role'] == "admin":
@@ -82,9 +81,9 @@ def complete(task_id):
 
 
 # Delete Tasks:
-@tasks_blueprint.route('/delete/<int:task_id>/',)
+@tasks_blueprint.route('/delete/<int:task_id>/', )
 @login_required
-def delete_entry(task_id):
+def delete_entry( task_id ):
     new_id = task_id
     task = db.session.query(Task).filter_by(task_id=new_id)
     if session['user_id'] == task.first().user_id or session['role'] == "admin":
@@ -95,3 +94,53 @@ def delete_entry(task_id):
     else:
         flash('You can only delete tasks that belong to you.')
         return redirect(url_for('tasks.tasks'))
+
+
+@tasks_blueprint.route('/searches/')
+@login_required
+def searches( ):
+    completed_searches = db.session.query(Search).order_by(Search.posted_date.asc())
+    
+    return render_template(
+            'searches.html',
+            form=AddSearchForm(request.form),
+            completed_searches=completed_searches,
+            username=session['name']
+    )
+
+
+@tasks_blueprint.route('/add_search/', methods=['GET', 'POST'])
+@login_required
+def new_search( ):
+    error = None
+    form = AddSearchForm(request.form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            search = Search(
+                    form.source.name,
+                    form.source.data,
+                    datetime.datetime.utcnow(),
+                    session['user_id']
+            )
+            db.session.add(search)
+            db.session.commit()
+            flash('New search was successfully created.')
+            return redirect(url_for('tasks.searches'))
+        else:
+            return render_template('searches.html', form=form, error=error)
+
+
+# Delete Tasks:
+@tasks_blueprint.route('/delete_search/<int:search_id>/', )
+@login_required
+def delete_search( search_id ):
+    new_id = search_id
+    search = db.session.query(Search).filter_by(search_id=new_id)
+    if session['user_id'] == search.first().user_id or session['role'] == "admin":
+        search.delete()
+        db.session.commit()
+        flash('The search was deleted. Why not add a new one?')
+        return redirect(url_for('tasks.searches'))
+    else:
+        flash('You can only delete searches that belong to you.')
+        return redirect(url_for('tasks.searches'))

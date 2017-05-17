@@ -1,3 +1,7 @@
+"""
+source:
+ http://tech.blog.aknin.name/2011/12/11/walking-python-objects-recursively/
+"""
 from collections import Mapping, Set, Sequence
 
 # dual python 2/3 compatability, inspired by the "six" library
@@ -5,11 +9,7 @@ string_types = (str, unicode) if str is bytes else (str, bytes)
 iteritems = lambda mapping: getattr(mapping, 'iteritems', mapping.items)()
 
 
-def objwalk(obj, path=(), memo=None):
-    """
-    source:
-     http://tech.blog.aknin.name/2011/12/11/walking-python-objects-recursively/
-    """
+def objwalk( obj, path=(), memo=None ):
     if memo is None:
         memo = set()
     iterator = None
