@@ -41,6 +41,9 @@ class ProvDoc(object):
         # serialize with rdf (ttl)
         elif len(args) == 2:
             self.serialization = self.provDocs.serialize(format=args[0], rdf_format=args[1])
+        # elif len(args) == 3:
+        #     self.serialization = self.provDocs.serialize(format=args[0], rdf_format=args[1])
+        #     self.provDocs.serialize(destination=args[2], format=args[0], rdf_format=args[1])
         else:
             print 'cannot serialize prov with argument length: ', len(args), '| arguments: ', args
             return
