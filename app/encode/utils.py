@@ -35,7 +35,7 @@ def save_to_file(output, file_name):
     dirPath = os.path.join(PROJECT_ROOT, file_name)
 
     # save input to file
-    new_file = open(dirPath, 'w')
+    new_file = open(dirPath, 'w+')
     new_file.write(output)
     
     return dirPath

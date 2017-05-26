@@ -1,24 +1,31 @@
-from utils import objwalk, save_to_file
+from ..utils import objwalk, save_to_file
 
 
 class Encoder(object):
     
     def __init__( self ):
+        # items to look for in data
         self.requirements = []
+        # items found while searching
         self.requirements_met = []
-
+        
+        # provenance document class
         self.prov_document = None
-
+        
+        # foundation provenance elements
         self.agent = None
         self.activity = None
         self.entity = None
-
+        
+        # foundation provenance element relations
         self.was_generated_by = None
         self.was_attributed_to = None
         self.was_associated_with = None
         
+        # serialization output location
         self.output_location = None
         
+        # initialize foundation element requirements to look for
         self._init_requirements()
     
     def _init_requirements(self):
@@ -31,9 +38,11 @@ class Encoder(object):
         return self.requirements_met
     
     def traverse_data(self, data):
-        # look at path an values of dictionary
+        # look at path an values of input data (as a dictionary)
         for path, value in objwalk(data):
-            # in the matching requirements
+            thing = 'coordinates'
+            # if thing.issubset(set(path)): print thing
+            # in the requirements
             for requirement in self.requirements:
                 # check if path contains requirements
                 requirement_results = self._path_contains_requirements(path, value, requirement)
@@ -42,13 +51,24 @@ class Encoder(object):
                     # print requirement_results
     
     def _path_contains_requirements(self, path, value, requirement):
-        if set(requirement).issubset(set(path)):
-            return path, value, requirement
+        # if both requirement and path are tuples
+        if isinstance(requirement, tuple) and isinstance(path, tuple):
+            # if the set of the path contains the requirement
+            if set(requirement).issubset(set(path)):
+                return path, value, requirement
+        # otherwise, if requirement is a string
+        elif isinstance(requirement, str):
+            # if the path contains the requirement
+            if requirement in path:
+                if len(path) == 1:
+                    print 'hi'
+                    return path, value, requirement
         
     def implement_requirements( self, prov_document ):
-
+        
+        # add provenance document object
         self.prov_document = prov_document
-
+        
         # for each matched requirement of the data
         for requirement in self.get_requirements_met():
 
@@ -81,9 +101,6 @@ class Encoder(object):
 
             self._check_if_requirements_have_been_handled()
     
-    def implement_requirements(self, prov_document):
-        self.prov_document = prov_document
-    
     def _check_if_requirements_have_been_handled( self ):
         
         if self.activity is not None and self.entity is not None and self.was_generated_by is None:
@@ -92,7 +109,6 @@ class Encoder(object):
             self.was_associated_with = self.prov_document.new_was_associated_with(self.activity, self.agent)
         if self.entity is not None and self.agent is not None and self.was_attributed_to is None:
             self.was_attributed_to = self.prov_document.new_was_attributed_to(self.entity, self.agent)
-    
     
     def check_requirement(self):
         pass

@@ -7,9 +7,9 @@ class TwitterEncoder(Encoder):
         super(TwitterEncoder, self).__init__()
 
     def _init_requirements(self):
-        user_home = ('user', 'home_location')
-        tweet_location = ('content', 'location')
-        tweet_geotag = ('content', 'tagged_location')
+        user_home = ('user', 'location')  # user & bio location JSON attributes
+        tweet_location = 'coordinates'  # tweet & coordinates JSON attributes
+        tweet_geotag = ('place', 'name')  # tweet & POI JSON attributes
         self.requirements.append(user_home)
         self.requirements.append(tweet_location)
         self.requirements.append(tweet_geotag)

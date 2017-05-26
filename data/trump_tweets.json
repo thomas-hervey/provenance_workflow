@@ -1,0 +1,141 @@
+{
+  "created_at": "Tue Apr 11 05:23:06 +0000 2017",
+  "id": 851666897548460000,
+  "id_str": "851666897548460033",
+  "text": "Wow isn't this interesting, somehow Trump will take credit for the Dems growth record #Resistance #resist https://t.co/9DKAiZNFso",
+  "truncated": false,
+  "entities": {
+    "hashtags": [
+      {
+        "text": "Resistance",
+        "indices": [
+          86,
+          97
+        ]
+      },
+      {
+        "text": "resist",
+        "indices": [
+          98,
+          105
+        ]
+      }
+    ],
+    "symbols": [],
+    "user_mentions": [],
+    "urls": [
+      {
+        "url": "https://t.co/9DKAiZNFso",
+        "expanded_url": "https://twitter.com/bannontruth/status/851638635095105536",
+        "display_url": "twitter.com/bannontruth/st…",
+        "indices": [
+          106,
+          129
+        ]
+      }
+    ]
+  },
+  "metadata": {
+    "iso_language_code": "en",
+    "result_type": "recent"
+  },
+  "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+  "in_reply_to_status_id": null,
+  "in_reply_to_status_id_str": null,
+  "in_reply_to_user_id": null,
+  "in_reply_to_user_id_str": null,
+  "in_reply_to_screen_name": null,
+  "user": {
+    "id": 822834252341542900,
+    "id_str": "822834252341542912",
+    "name": "PTpauly",
+    "screen_name": "ptpauly5775",
+    "location": "TEST_HOME_LOCATION***",
+    "description": "Married, Ind voter, lean a little right, live in California, Care about environment, National Parks need to be preserved, Saw JFK Watergate Iran Contra",
+    "url": null,
+    "entities": {
+      "description": {
+        "urls": []
+      }
+    },
+    "protected": false,
+    "followers_count": 34,
+    "friends_count": 161,
+    "listed_count": 0,
+    "created_at": "Sat Jan 21 15:52:28 +0000 2017",
+    "favourites_count": 193,
+    "utc_offset": null,
+    "time_zone": null,
+    "geo_enabled": true,
+    "verified": false,
+    "statuses_count": 611,
+    "lang": "en",
+    "contributors_enabled": false,
+    "is_translator": false,
+    "is_translation_enabled": false,
+    "profile_background_color": "000000",
+    "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+    "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+    "profile_background_tile": false,
+    "profile_image_url": "http://pbs.twimg.com/profile_images/843123301568466947/F423Opib_normal.jpg",
+    "profile_image_url_https": "https://pbs.twimg.com/profile_images/843123301568466947/F423Opib_normal.jpg",
+    "profile_link_color": "1B95E0",
+    "profile_sidebar_border_color": "000000",
+    "profile_sidebar_fill_color": "000000",
+    "profile_text_color": "000000",
+    "profile_use_background_image": false,
+    "has_extended_profile": true,
+    "default_profile": false,
+    "default_profile_image": false,
+    "following": false,
+    "follow_request_sent": false,
+    "notifications": false,
+    "translator_type": "none"
+  },
+  "geo": null,
+  "coordinates": "TEST_COORDINATES",
+  "place": {
+    "id": "fbd6d2f5a4e4a15e",
+    "url": "https://api.twitter.com/1.1/geo/id/fbd6d2f5a4e4a15e.json",
+    "place_type": "admin",
+    "name": "California",
+    "full_name": "California, USA",
+    "country_code": "US",
+    "country": "United States",
+    "contained_within": [],
+    "bounding_box": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -124.482003,
+            32.528832
+          ],
+          [
+            -114.131212,
+            32.528832
+          ],
+          [
+            -114.131212,
+            42.009519
+          ],
+          [
+            -124.482003,
+            42.009519
+          ]
+        ]
+      ]
+    },
+    "attributes": {}
+  },
+  "contributors": null,
+  "is_quote_status": true,
+  "quoted_status_id": 851638635095105500,
+  "quoted_status_id_str": "851638635095105536",
+  "retweet_count": 0,
+  "favorite_count": 0,
+  "favorited": false,
+  "retweeted": false,
+  "possibly_sensitive": false,
+  "lang": "en"
+}
