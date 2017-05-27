@@ -10,28 +10,27 @@ from utils import Reader, test_data
 from encode import TwitterEncoder
 
 
-def run_workflow(data):
+def run_workflow(filepath):
     
     # create sample reader
-    sample_reader = Reader()
-    sample_reader.load_json_data(data)
+    sample_reader = Reader('Trump Reader')   # also capable of taking in data not from file
+    sample_reader.load_data_from_file(filepath)
+    
+    # print sample_reader.get_data()
     
     # create sample encoder
     sample_encoder = TwitterEncoder()
-    sample_encoder.traverse_data(sample_reader.get_data())
+    sample_encoder.look_for_requirements(sample_reader.get_data())
+
+    print "GET REQUIREMENTS: \n", sample_encoder.get_requirements()
+
+    # create provenance document
+    sample_twitter_prov_doc = TwitterProvDoc('sample_document_name', 'sample_query', NAMESPACES, 'sample_extra_value')
+    
+    sample_encoder.add_prov_doc(sample_twitter_prov_doc)
+    sample_encoder.implement_requirements()
 #
-#     print "GET REQUIREMENTS: \n", sample_encoder.get_requirements()
-#     print "GET REQUIREMENTS MET: \n", sample_encoder.get_requirements_met()
-#
-#     # create provenance document
-#     sample_twitter_document = TwitterProvDoc('sample_document_name', 'sample_query', NAMESPACES, 'sample_extra_value')
-#
-#     # print sample_encoder.get_requirements()
-#     # print sample_encoder.get_requirements_met()
-#
-#     sample_encoder.implement_requirements(sample_twitter_document)
-#
-#     print "PROV-N: \n", sample_encoder.prov_document.get_prov()
+    print "PROV-N: \n", sample_encoder.prov_document.get_prov()
 #     # print type(sample_encoder.prov_document.get_prov())
 #
 #     # serialize document into turtle
@@ -67,11 +66,13 @@ def run_workflow(data):
 #         print(row)
 #
 #
-# file_name = 'trump_tweets.json'
-# PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-# dirPath = os.path.join(PROJECT_ROOT, '..')
-# dirPath = os.path.join(dirPath, 'data/', file_name)
-# trump_data = json.load(open(dirPath, 'r'))
-#
-# run_workflow(trump_data)
-run_workflow(test_data)
+
+
+
+# file_name = 'test_data.json'
+file_name = 'trump_tweets.json'
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+dirPath = os.path.join(PROJECT_ROOT, '..')
+filepath = os.path.join(dirPath, 'data/', file_name)
+
+run_workflow(filepath)
