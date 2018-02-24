@@ -1,47 +1,83 @@
+import json
 from pprint import pprint
 
-from provdoc import NAMESPACES, TwitterProvDoc, ProvDoc
+import rdflib.graph as g
+
+import os
+
+from provdoc import NAMESPACES, TwitterProvDoc
 from utils import Reader, test_data
 from encode import TwitterEncoder
 
-# create sample reader
-sample_reader = Reader()
-sample_reader.load_json_data(test_data)
 
-# create sample encoder
-sample_encoder = TwitterEncoder()
-sample_encoder.traverse_data(sample_reader.get_data())
+def run_workflow(filepath):
+    
+    # create sample reader
+    sample_reader = Reader('Trump Reader')   # also capable of taking in data not from file
+    sample_reader.load_data_from_file(filepath)
+    
+    # print sample_reader.get_data()
+    
+    # create sample encoder
+    sample_encoder = TwitterEncoder()
+    sample_encoder.look_for_requirements(sample_reader.get_data())
 
-#
-#
-# # #reading in from file
-# # filepath = "../../data/test_data.json"
-# # sample_reader.load_data(filepath)
-# # sample_reader.print_data()
-#
-#
-# # create provenance document
-# sample_twitter_document = TwitterProvDoc('sample_document_name', 'sample_query', NAMESPACES, 'sample_extra_value')
-#
-# twitter_user = sample_twitter_document.new_agent('local:contributor',
-#                                                  {'prov:label'     : "a twitter user",
-#                                                   'prov:atLocation': "home location"})
-# tweet_posting = sample_twitter_document.new_activity('local:compose',
-#                                                      {'prov:label'     : "composing a tweet",
-#                                                       'prov:atLocation': "lat/lon"})
-# tweet = sample_twitter_document.new_entity('local:composition',
-#                                            {'prov:label'     : "a tweet",
-#                                             'prov:atLocation': "associated location"})
-#
-# sample_twitter_document.new_was_generated_by(tweet, tweet_posting)
-# sample_twitter_document.new_was_associated_with(tweet_posting, twitter_user)
-# sample_twitter_document.new_was_attributed_to(tweet, twitter_user)
-#
-# print "PROV:\n", sample_twitter_document.get_prov()
-#
-# # serialize provenance as rdf ttl
-# sample_twitter_document.serialize('rdf', 'ttl')
-#
-# # query provenance serialization
-# serialization = sample_twitter_document.get_serialization()
-# print "SERIALIZATION:\n", serialization
+    print "GET REQUIREMENTS: \n", sample_encoder.get_requirements()
+
+    # create provenance document
+    sample_twitter_prov_doc = TwitterProvDoc('sample_document_name', 'sample_query', NAMESPACES, 'sample_extra_value')
+    
+    sample_encoder.add_prov_doc(sample_twitter_prov_doc)
+    sample_encoder.set_prov_core_elements()
+
+    print "PROV-N: \n", sample_encoder.prov_document.get_prov()
+    # print type(sample_encoder.prov_document.get_prov())
+
+    # serialize document into turtle
+    sample_encoder.prov_document.serialize('rdf', 'ttl')
+
+    # save turtle serialization
+    sample_encoder.write_serialization('test.ttl')
+
+
+
+    
+    from SPARQLWrapper import SPARQLWrapper, JSON
+    import rdflib
+    
+    output_location = sample_encoder.serialization_output_location
+
+    g = rdflib.Graph()
+    result = g.parse(output_location, format='n3')
+    # for stmt in g:
+    #     pprint(stmt)
+
+    sample_query = """
+        SELECT ?label
+        WHERE {
+            ?compose
+            rdfs:label ?label.
+            ?compose
+            prov:atLocation ?location.
+            ?compose
+            prov:wasAssociatedWith ?contributor.
+            ?contributor
+            prov:atLocation ?location2.
+        }
+        """
+    qres = g.query(sample_query)
+    for row in qres:
+        print "hi"
+        print(row)
+
+
+
+
+
+# file_name = 'test_data.json'
+file_name = 'trump_tweets.json'
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+dirPath = os.path.join(PROJECT_ROOT, '..')
+filepath = os.path.join(dirPath, 'data/', file_name)
+
+run_workflow(filepath)

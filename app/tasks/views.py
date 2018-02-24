@@ -3,8 +3,11 @@
 from flask import flash, redirect, render_template, request, \
     session, url_for, Blueprint
 import datetime
+
 from forms import AddTaskForm, AddSearchForm
+
 from ..app import db
+from app.sample_workflow import run_workflow
 from app.views import login_required
 from app.models import Task, Search
 
@@ -117,14 +120,19 @@ def new_search( ):
     if request.method == 'POST':
         if form.validate_on_submit():
             search = Search(
-                    form.source.name,
+                    form.name.data,
                     form.source.data,
+                    form.data.data,
                     datetime.datetime.utcnow(),
                     session['user_id']
             )
             db.session.add(search)
             db.session.commit()
             flash('New search was successfully created.')
+            
+            # *** CRUCIAL
+            # run_workflow(search.data)
+            
             return redirect(url_for('tasks.searches'))
         else:
             return render_template('searches.html', form=form, error=error)

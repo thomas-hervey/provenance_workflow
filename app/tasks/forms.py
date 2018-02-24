@@ -2,7 +2,7 @@
 
 
 from flask_wtf import Form
-from wtforms import StringField, DateField, IntegerField, SelectField
+from wtforms import StringField, DateField, IntegerField, SelectField, TextAreaField
 from wtforms.validators import DataRequired
 
 
@@ -35,3 +35,4 @@ class AddSearchForm(Form):
                 ('Google +', 'Google +'), ('Instagram', 'Instagram'), ('Yelp', 'Yelp')
             ]
     )
+    data = TextAreaField('Data', validators=[DataRequired()])

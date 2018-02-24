@@ -37,12 +37,14 @@ class Search(db.Model):
     search_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     source = db.Column(db.String, nullable=False)
+    data = db.Column(db.Text, nullable=False)
     posted_date = db.Column(db.Date, default=datetime.datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
-    def __init__( self, name, source, posted_date, user_id ):
+    def __init__( self, name, source, data, posted_date, user_id ):
         self.name = name
         self.source = source
+        self.data = data
         self.posted_date = posted_date
         self.user_id = user_id
     
