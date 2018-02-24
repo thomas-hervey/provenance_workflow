@@ -7,3 +7,18 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+local:composition a prov:Entity ;
+    prov:atLocation "California"^^xsd:string ;
+    prov:value "Wow isn't this interesting, somehow Trump will take credit for the Dems growth record #Resistance #resist https://t.co/9DKAiZNFso"^^xsd:string ;
+    prov:wasAttributedTo local:contributor ;
+    prov:wasGeneratedBy local:compose .
+
+local:compose a prov:Activity ;
+    prov:atLocation "TEST_COORDINATES"^^xsd:string ;
+    prov:startedAtTime "2017-04-11T05:23:06+00:00"^^xsd:dateTime ;
+    prov:wasAssociatedWith local:contributor .
+
+local:contributor a prov:Agent ;
+    prov:atLocation "TEST_HOME_LOCATION***"^^xsd:string ;
+    prov:id "822834252341542900"^^xsd:string ;
+

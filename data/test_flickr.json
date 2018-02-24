@@ -1,0 +1,31 @@
+{ "photo": { "id": "31956177463", "secret": "a57ba44259", "server": "729", "farm": 1, "dateuploaded": "1486499848", "isfavorite": 0, "license": 0, "safety_level": 0, "rotation": 0, "originalsecret": "8c05e7f26d", "originalformat": "jpg",
+    "owner": { "nsid": "95329768@N05", "username": "thomasovitch", "realname": "Thomas Hervey", "location": "Santa Barbara, CA,, USA", "iconserver": 0, "iconfarm": 0, "path_alias": "" },
+    "title": { "_content": "Test capture in" },
+    "description": { "_content": "" },
+    "visibility": { "ispublic": 1, "isfriend": 0, "isfamily": 0 },
+    "dates": { "posted": "1486499848", "taken": "2017-02-07 12:36:05", "takengranularity": 0, "takenunknown": 0, "lastupdate": "1486499855" },
+    "permissions": { "permcomment": 3, "permaddmeta": 2 }, "views": 0,
+    "editability": { "cancomment": 1, "canaddmeta": 1 },
+    "publiceditability": { "cancomment": 1, "canaddmeta": 0 },
+    "usage": { "candownload": 1, "canblog": 1, "canprint": 1, "canshare": 1 },
+    "comments": { "_content": 0 },
+    "notes": {
+      "note": [
+
+      ] },
+    "people": { "haspeople": 0 },
+    "tags": {
+      "tag": [
+
+      ] },
+    "location": { "latitude": 34.415247, "longitude": -119.845250, "accuracy": 16, "context": 0,
+      "neighbourhood": { "_content": "University of California-Santa Barbara", "place_id": "htdc4IhYU7MPfThNJw", "woeid": "91985189" },
+      "locality": { "_content": "Isla Vista", "place_id": "0bADxTNTVrgtZg3Y", "woeid": "2427799" },
+      "county": { "_content": "Santa Barbara", "place_id": "r5AWjcRQUL_rvySZUQ", "woeid": "12587711" },
+      "region": { "_content": "California", "place_id": "NsbUWfBTUb4mbyVu", "woeid": "2347563" },
+      "country": { "_content": "United States", "place_id": "nz.gsghTUb4c2WAecA", "woeid": "23424977" }, "place_id": "htdc4IhYU7MPfThNJw", "woeid": "91985189" },
+    "geoperms": { "ispublic": 0, "iscontact": 0, "isfriend": 0, "isfamily": 0 },
+    "urls": {
+      "url": [
+        { "type": "photopage", "_content": "https:\/\/www.flickr.com\/photos\/95329768@N05\/31956177463\/" }
+      ] }, "media": "photo" }, "stat": "ok" }

@@ -28,44 +28,49 @@ def run_workflow(filepath):
     sample_twitter_prov_doc = TwitterProvDoc('sample_document_name', 'sample_query', NAMESPACES, 'sample_extra_value')
     
     sample_encoder.add_prov_doc(sample_twitter_prov_doc)
-    sample_encoder.implement_requirements()
-#
+    sample_encoder.set_prov_core_elements()
+
     print "PROV-N: \n", sample_encoder.prov_document.get_prov()
-#     # print type(sample_encoder.prov_document.get_prov())
-#
-#     # serialize document into turtle
-#     sample_encoder.prov_document.serialize('rdf', 'ttl')
-#
-#     # save turtle serialization
-#     sample_encoder.write_serialization('test.ttl')
-#
-#     from SPARQLWrapper import SPARQLWrapper, JSON
-#     import rdflib
-#
-#     g = rdflib.Graph()
-#     result = g.parse('test.ttl', format='n3')
-#     # for stmt in g:
-#     #     pprint(stmt)
-#
-#     sample_query = """
-#         SELECT ?label
-#         WHERE {
-#             ?compose
-#             rdfs:label ?label.
-#             ?compose
-#             prov:atLocation ?location.
-#             ?compose
-#             prov:wasAssociatedWith ?contributor.
-#             ?contributor
-#             prov:atLocation ?location2.
-#         }
-#         """
-#     qres = g.query(sample_query)
-#     for row in qres:
-#         print "hi"
-#         print(row)
-#
-#
+    # print type(sample_encoder.prov_document.get_prov())
+
+    # serialize document into turtle
+    sample_encoder.prov_document.serialize('rdf', 'ttl')
+
+    # save turtle serialization
+    sample_encoder.write_serialization('test.ttl')
+
+
+
+    
+    from SPARQLWrapper import SPARQLWrapper, JSON
+    import rdflib
+    
+    output_location = sample_encoder.serialization_output_location
+
+    g = rdflib.Graph()
+    result = g.parse(output_location, format='n3')
+    # for stmt in g:
+    #     pprint(stmt)
+
+    sample_query = """
+        SELECT ?label
+        WHERE {
+            ?compose
+            rdfs:label ?label.
+            ?compose
+            prov:atLocation ?location.
+            ?compose
+            prov:wasAssociatedWith ?contributor.
+            ?contributor
+            prov:atLocation ?location2.
+        }
+        """
+    qres = g.query(sample_query)
+    for row in qres:
+        print "hi"
+        print(row)
+
+
 
 
 

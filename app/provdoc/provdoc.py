@@ -61,6 +61,7 @@ class ProvDoc(object):
     
     def new_was_generated_by( self, entity, activity, identifier=None, other_attributes=None ):
         self.was_generated_by = self.provDocs.wasGeneratedBy(entity, activity)
+        print "thing"
     
     def new_was_associated_with( self, activity, agent, identifier=None, other_attributes=None ):
         self.was_associated_with = self.provDocs.wasAssociatedWith(activity, agent)

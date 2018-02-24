@@ -82,7 +82,7 @@ class Encoder(object):
     
     """ add provenance information """
 
-    def implement_requirements( self ):
+    def set_prov_core_elements( self ):
     
         # attribute lists to be passed to prov elements on creation
         agent_attributes = {}
@@ -106,7 +106,7 @@ class Encoder(object):
             elif k is 'activity_location':
                 activity_attributes['prov:atLocation'] = value
             elif k is 'entity_text':
-                entity_attributes['prov:'] = value
+                entity_attributes['prov:value'] = value
             elif k is 'entity_location':
                 entity_attributes['prov:atLocation'] = value
             else:
@@ -120,9 +120,9 @@ class Encoder(object):
         if len(entity_attributes) != 0:
             self.prov_document.new_entity('local:composition', other_attributes=entity_attributes)
         
-        self.set_prov_relations()
+        self.set_prov_core_relations()
     
-    def set_prov_relations( self ):
+    def set_prov_core_relations( self ):
         if self.prov_document.activity and self.prov_document.entity and not self.prov_document.was_generated_by:
             self.prov_document.new_was_generated_by(self.prov_document.entity, self.prov_document.activity)
         if self.prov_document.activity and self.prov_document.agent and not self.prov_document.was_associated_with:
